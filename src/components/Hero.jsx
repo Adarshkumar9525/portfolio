@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { ArrowRight, Download, Github, Linkedin, Mail, Phone, Code2, Database } from 'lucide-react';
+import { ArrowRight, Download, Github, Linkedin, Mail, Phone, Move3d } from 'lucide-react';
 import confetti from 'canvas-confetti';
 import { portfolioData } from '../data/portfolioData';
 
-export default function Hero() {
+export default function Hero({ is3DMode }) {
   const [roleIndex, setRoleIndex] = useState(0);
 
   useEffect(() => {
@@ -34,10 +34,8 @@ export default function Hero() {
   };
 
   return (
-    <section id="hero" className="relative min-h-[92vh] pt-32 pb-20 flex items-center justify-center overflow-hidden bg-radial-grid">
+    <section id="hero" className="relative min-h-[92vh] pt-32 pb-20 flex items-center justify-center overflow-hidden">
       <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[550px] h-[550px] bg-cyan-500/10 dark:bg-cyan-500/10 rounded-full blur-3xl pointer-events-none" />
-      <div className="absolute top-1/3 left-1/4 w-[350px] h-[350px] bg-blue-600/10 dark:bg-blue-600/10 rounded-full blur-3xl pointer-events-none" />
-      <div className="absolute bottom-10 right-1/4 w-[400px] h-[400px] bg-teal-500/10 dark:bg-teal-500/10 rounded-full blur-3xl pointer-events-none" />
 
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center">
@@ -150,12 +148,36 @@ export default function Hero() {
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.8, delay: 0.2 }}
-            className="lg:col-span-5 flex justify-center"
+            className="lg:col-span-5 flex flex-col items-center justify-center"
           >
-            <div className="relative w-72 sm:w-80 md:w-96">
-              <div className="absolute -inset-4 bg-gradient-to-tr from-cyan-500 via-blue-600 to-teal-400 rounded-3xl opacity-30 blur-2xl animate-pulse-slow" />
-              
-              <div className="relative rounded-3xl p-1.5 bg-gradient-to-b from-cyan-500/40 via-slate-300 dark:via-slate-800 to-teal-500/30 shadow-2xl">
+            {is3DMode ? (
+              <div className="w-full max-w-sm p-6 rounded-3xl glass-card border border-cyan-500/30 text-center space-y-4 backdrop-blur-xl shadow-2xl">
+                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-500/10 text-cyan-600 dark:text-cyan-400 text-xs font-mono font-semibold">
+                  <Move3d className="w-4 h-4" />
+                  <span>Interactive 3D Glass Object</span>
+                </div>
+                
+                <h3 className="text-base font-bold text-slate-900 dark:text-white">
+                  Grab, Drag & Throw Dev Station
+                </h3>
+                
+                <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
+                  Click and drag the central refractive 3D glass workstation with your cursor. Release with flick velocity to throw with real-time spring physics.
+                </p>
+
+                <div className="grid grid-cols-2 gap-2 text-xs pt-2 border-t border-slate-200 dark:border-slate-800/80">
+                  <div className="p-2.5 rounded-xl bg-slate-100 dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800">
+                    <div className="text-[10px] text-cyan-600 dark:text-cyan-400 font-mono font-bold">Physics</div>
+                    <div className="font-semibold text-slate-800 dark:text-slate-200">Spring Inertia</div>
+                  </div>
+                  <div className="p-2.5 rounded-xl bg-slate-100 dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800">
+                    <div className="text-[10px] text-teal-600 dark:text-teal-400 font-mono font-bold">Refraction</div>
+                    <div className="font-semibold text-slate-800 dark:text-slate-200">Glass Optics</div>
+                  </div>
+                </div>
+              </div>
+            ) : (
+              <div className="relative rounded-3xl p-1.5 bg-gradient-to-b from-cyan-500/40 via-slate-300 dark:via-slate-800 to-teal-500/30 shadow-2xl max-w-sm">
                 <div className="bg-white dark:bg-[#0e1422] rounded-[22px] p-4 sm:p-5 overflow-hidden border border-slate-200 dark:border-slate-800">
                   <div className="relative rounded-2xl overflow-hidden aspect-square border border-slate-200 dark:border-slate-700/60 group">
                     <img 
@@ -163,38 +185,10 @@ export default function Hero() {
                       alt={portfolioData.personal.name}
                       className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 dark:from-[#0e1422] via-transparent to-transparent opacity-60" />
-                    <div className="absolute bottom-3 left-3 right-3 flex items-center justify-between p-2.5 rounded-xl bg-slate-900/80 dark:bg-slate-900/80 backdrop-blur-md border border-slate-700/80 text-xs">
-                      <div className="flex items-center gap-2">
-                        <div className="w-2 h-2 rounded-full bg-cyan-400 animate-ping" />
-                        <span className="font-semibold text-slate-100">Full Stack Engineer</span>
-                      </div>
-                      <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-cyan-500/20 text-cyan-300 font-semibold">MERN</span>
-                    </div>
                   </div>
-
-                  <div className="mt-4 grid grid-cols-2 gap-2 text-xs">
-                    <div className="p-2.5 rounded-xl bg-slate-100 dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800 flex items-center gap-2">
-                      <Code2 className="w-4 h-4 text-cyan-600 dark:text-cyan-400 shrink-0" />
-                      <div>
-                        <div className="text-[10px] text-slate-500 dark:text-slate-400">Frontend</div>
-                        <div className="font-bold text-slate-900 dark:text-slate-200">React 19 & Next</div>
-                      </div>
-                    </div>
-
-                    <div className="p-2.5 rounded-xl bg-slate-100 dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800 flex items-center gap-2">
-                      <Database className="w-4 h-4 text-teal-600 dark:text-teal-400 shrink-0" />
-                      <div>
-                        <div className="text-[10px] text-slate-500 dark:text-slate-400">Backend</div>
-                        <div className="font-bold text-slate-900 dark:text-slate-200">Node & MongoDB</div>
-                      </div>
-                    </div>
-                  </div>
-
                 </div>
               </div>
-
-            </div>
+            )}
           </motion.div>
 
         </div>
@@ -208,7 +202,7 @@ export default function Hero() {
           {portfolioData.stats.map((stat, idx) => (
             <div 
               key={idx} 
-              className="p-4 sm:p-5 rounded-2xl glass-card glass-card-hover flex flex-col items-center text-center"
+              className="p-4 sm:p-5 rounded-2xl glass-card glass-card-hover flex flex-col items-center text-center backdrop-blur-md"
             >
               <div className="text-2xl sm:text-3xl font-extrabold text-gradient mb-1">
                 {stat.value}

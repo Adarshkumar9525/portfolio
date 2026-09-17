@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Menu, X, Sun, Moon, Download, Github, Linkedin, Mail } from 'lucide-react';
+import { Menu, X, Sun, Moon, Download, Box } from 'lucide-react';
 import { portfolioData } from '../data/portfolioData';
 
 const navItems = [
@@ -13,7 +13,7 @@ const navItems = [
   { id: 'contact', label: 'Contact' },
 ];
 
-export default function Navbar({ activeSection, theme, toggleTheme }) {
+export default function Navbar({ activeSection, theme, toggleTheme, is3DMode, toggle3DMode }) {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
 
@@ -44,7 +44,7 @@ export default function Navbar({ activeSection, theme, toggleTheme }) {
     <header 
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         scrolled 
-          ? 'bg-white/90 dark:bg-[#0a0d14]/90 backdrop-blur-md border-b border-slate-200 dark:border-slate-800/80 shadow-md dark:shadow-black/20 py-3.5' 
+          ? 'bg-white/85 dark:bg-[#0a0d14]/85 backdrop-blur-md border-b border-slate-200 dark:border-slate-800/80 shadow-md dark:shadow-black/20 py-3.5' 
           : 'bg-transparent py-5'
       }`}
     >
@@ -99,8 +99,22 @@ export default function Navbar({ activeSection, theme, toggleTheme }) {
           </nav>
 
           {/* Action CTAs & Controls */}
-          <div className="flex items-center gap-2.5 sm:gap-3">
+          <div className="flex items-center gap-2 sm:gap-2.5">
             
+            {/* 3D / 2D Mode Switcher Toggle Button */}
+            <button
+              onClick={toggle3DMode}
+              title={is3DMode ? "Switch to 2D Lite Mode" : "Switch to 3D Experience"}
+              className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl border text-xs font-semibold font-mono transition-all duration-200 ${
+                is3DMode 
+                  ? 'bg-cyan-500/15 text-cyan-700 dark:text-cyan-300 border-cyan-500/40 shadow-sm shadow-cyan-500/20' 
+                  : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 border-slate-200 dark:border-slate-700 hover:text-cyan-600'
+              }`}
+            >
+              <Box className="w-3.5 h-3.5" />
+              <span>{is3DMode ? '3D Active' : '2D Lite'}</span>
+            </button>
+
             {/* Dark / Light Toggle */}
             <button
               onClick={toggleTheme}
@@ -166,6 +180,14 @@ export default function Navbar({ activeSection, theme, toggleTheme }) {
               })}
 
               <div className="pt-3 mt-2 border-t border-slate-200 dark:border-slate-800/80 flex flex-col gap-2">
+                <button
+                  onClick={toggle3DMode}
+                  className="flex items-center justify-center gap-2 w-full py-2 text-xs font-semibold rounded-xl bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-200 font-mono"
+                >
+                  <Box className="w-4 h-4 text-cyan-500" />
+                  <span>{is3DMode ? 'Disable 3D (Switch to 2D Lite)' : 'Enable 3D Experience'}</span>
+                </button>
+
                 <a
                   href={portfolioData.personal.resumeUrl}
                   download="Adarsh_Kumar_Resume.pdf"
@@ -174,18 +196,6 @@ export default function Navbar({ activeSection, theme, toggleTheme }) {
                   <Download className="w-4 h-4" />
                   <span>Download Resume (PDF)</span>
                 </a>
-
-                <div className="flex items-center justify-center gap-4 pt-2 text-slate-500 dark:text-slate-400">
-                  <a href={portfolioData.personal.github} target="_blank" rel="noopener noreferrer" className="hover:text-cyan-600 dark:hover:text-cyan-400 transition-colors">
-                    <Github className="w-4 h-4" />
-                  </a>
-                  <a href={portfolioData.personal.linkedin} target="_blank" rel="noopener noreferrer" className="hover:text-cyan-600 dark:hover:text-cyan-400 transition-colors">
-                    <Linkedin className="w-4 h-4" />
-                  </a>
-                  <a href={`mailto:${portfolioData.personal.email}`} className="hover:text-cyan-600 dark:hover:text-cyan-400 transition-colors">
-                    <Mail className="w-4 h-4" />
-                  </a>
-                </div>
               </div>
             </div>
           </motion.div>
